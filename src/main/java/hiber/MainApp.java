@@ -5,11 +5,15 @@ import hiber.model.Car;
 import hiber.model.User;
 import hiber.service.CarService;
 import hiber.service.UserService;
+import hiber.service.UserServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.sql.SQLException;
 import java.util.List;
 
 public class MainApp {
+    @Autowired
+    UserServiceImp userServiceImp;
     public static void main(String[] args) throws SQLException {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
@@ -46,8 +50,6 @@ public class MainApp {
         carService.add(car4);
 
 
-
-
         List<Car> cars = carService.listCars();
         for (Car car : cars) {
             System.out.println("Id = " + car.getId());
@@ -65,7 +67,10 @@ public class MainApp {
             System.out.println("Car = " + user.getCar().infoCar());
             System.out.println();
         }
-        System.out.println(userService.getUserByCar("Mazda x8", 31235));
+      System.out.println("вот юзер машинки: " + userService.getUserByCar("Mazda x8", 31235));
+        userService.cleanUserTable();
+        carService.cleanCarsTable();
         context.close();
-    }
+
+   }
 }

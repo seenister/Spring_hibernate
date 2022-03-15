@@ -31,19 +31,23 @@ public class UserDaoImp implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getUserByCar(String model, int series) {
-        /*  String hql = "from Car where model = ? and series = ?";*/
-        String hql2 = "from User inner join Car c on User.id = c.user.id where Car.model = ? and Car.series = ?";
 
-        String hql = "from User where id = (select Car.user_id from Car where Car.model = ? and Car.series = ?)";
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hqlV2)
-                .setParameter(0, model)
-                .setParameter(1, series);
-        List<User> findCarList = query.getResultList();
-        if (!findCarList.isEmpty()) {
-            return findCarList;
+
+        String hql = "SELECT U FROM User AS U INNER JOIN U.car AS C WHERE C.model=:model AND C.series=:series";
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql)
+                .setParameter("series", series)
+                .setParameter("model", model);
+        List<User> findUserList = query.getResultList();
+        if (!findUserList.isEmpty()) {
+            return findUserList;
         }
         return null;
     }
 
 
+    @Override
+    public void cleanUserTable() {
+        String sql = "DROP TABLE IF EXISTS users";
+        sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
+    }
 }

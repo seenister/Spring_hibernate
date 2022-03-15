@@ -29,6 +29,12 @@ public class CarDaoImp implements CarDao {
         TypedQuery<Car> query = sessionFactory.getCurrentSession().createQuery("from Car"); //
         return query.getResultList();
     }
+    @Override
+    public void cleanCarsTable() {
+        String sql = "DROP TABLE IF EXISTS cars";
+        sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
+    }
+
 
 
 

@@ -30,19 +30,6 @@ public class CarDaoImp implements CarDao {
         return query.getResultList();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Car> getUserByCar(String model, int series) {
-        String hql = "from Car where model = ? and series = ?";
-        TypedQuery<Car> query = sessionFactory.getCurrentSession().createQuery(hql)
-                .setParameter(0, model)
-                .setParameter(1, series);
-        List<Car> findCarList = query.getResultList();
-        if (!findCarList.isEmpty()) {
-            return findCarList;
-        }
-        return null;
-    }
 
 
 }

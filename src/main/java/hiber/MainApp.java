@@ -65,7 +65,7 @@ public class MainApp {
             System.out.println("Car = " + user.getCar().infoCar());
             System.out.println();
         }
-        System.out.println(carService.getUserByCar("Mazda x8", 31235));
+        System.out.println(userService.getUserByCar("Mazda x8", 31235));
         context.close();
     }
 }

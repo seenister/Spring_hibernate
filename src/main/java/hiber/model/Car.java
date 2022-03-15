@@ -17,23 +17,25 @@ public class Car {
     @Column(name = "series")
     private int series;
 
-    @OneToOne(optional=false, mappedBy = "car")
-    private User owner;
+    @OneToOne(optional=false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-    public Car(String model, int series) {
+    public Car(String model, int series, User user) {
         this.model = model;
         this.series = series;
+        this.user = user;
     }
 
     public Car() {
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public User getUser() {
+        return user;
     }
 
-    public User getOwner() {
-        return owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -62,11 +64,10 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", model='" + model + '\'' +
-                ", series=" + series +
-                ", owner=" + owner +
-                '}';
+        return "машиной(ами) " + model + series + " владеет этот чел " + getUser();
+    }
+
+    public String infoCar() {
+        return model + series;
     }
 }

@@ -20,20 +20,17 @@ public class User {
     private String email;
 
 
-    @OneToOne(optional=false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cars_id", referencedColumnName = "id")
+    @OneToOne(optional=false, mappedBy = "user")
     private Car car;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, Car car) {
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.car= car;
     }
-
 
     public Car getCar() {
         return car;

@@ -22,6 +22,7 @@ public class CarDaoImp implements CarDao {
         sessionFactory.getCurrentSession().save(car);
     }
 
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Car> listCars() {
@@ -30,9 +31,18 @@ public class CarDaoImp implements CarDao {
     }
 
     @Override
-    public List<User> getUserByCar(String model, int series) {
-        String hql = "From User where Car.model = ? and Car.series = ?";
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql).setParameter(0, model).setParameter(1, series);
-        return query.getResultList();
+    @SuppressWarnings("unchecked")
+    public List<Car> getUserByCar(String model, int series) {
+        String hql = "from Car where model = ? and series = ?";
+        TypedQuery<Car> query = sessionFactory.getCurrentSession().createQuery(hql)
+                .setParameter(0, model)
+                .setParameter(1, series);
+        List<Car> findCarList = query.getResultList();
+        if (!findCarList.isEmpty()) {
+            return findCarList;
+        }
+        return null;
     }
+
+
 }
